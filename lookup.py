@@ -40,4 +40,9 @@ def store_data_as_xml(data, filename):
         root = ET.Element("root")
         for key, value in data.items():
             child = ET.SubElement(root, key)
-            child.textS
+            child.text = str(value)
+        tree = ET.ElementTree(root)
+        tree.write(filename)
+        print(f"Data stored successully in {filename}")
+    except Exception as e:
+        print(f"Error storing data as XML: {e}")
