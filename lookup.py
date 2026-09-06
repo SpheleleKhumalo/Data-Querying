@@ -46,3 +46,23 @@ def store_data_as_xml(data, filename):
         print(f"Data stored successully in {filename}")
     except Exception as e:
         print(f"Error storing data as XML: {e}")
+
+# Function to promot user to store data in JSON or XML format
+def offer_to_store(data):
+    while True:
+        choice = input("Do you want to store this data? Y/N: ").strip().lower()
+        if choice == 'y':
+            filename = input("Specify the filename (with .json or .xml extension): ").strip()
+            if filename.endswith('.xml'):
+                store_data_as_xml(data, filename)
+            elif filename.endswith('.json'):
+                store_data_as_json(data, filename)
+            else:
+                print("Invalid file extension. Please use .json or .xml.")
+        elif choice in ("n", "no"):
+            print("Data will not be stored.")
+            break
+        else:
+            print("Invalid input. Please enter 'Y' or 'N'.")
+
+
