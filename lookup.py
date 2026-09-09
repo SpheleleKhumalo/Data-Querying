@@ -65,4 +65,30 @@ def offer_to_store(data):
         else:
             print("Invalid input. Please enter 'Y' or 'N'.")
 
+USAGE = """
+Available commands:
 
+d                          - demo (list all student names)
+vs <student_id>            - view subjects taken by a student
+la <firstname> <surname>   - lookup address for a given firstname and surname
+lr <student_id>            - list reviews for a given student_id
+lc <teacher_id>            - list all courses taken by teacher_id
+lnc                        - list all students who haven't completed their course
+lf                         - list all students who completed their course with marks <= 30
+e                          - exit program
+"""
+
+print("Welcome to the Data Querying App!")
+
+while True:
+    print()
+    user_input = input(USAGE + "\nType your option here: ").split()
+    if not user_input:
+        continue
+
+    command, *args = user_input
+
+    if command == "d":
+        data = cur.execute("SELECT first_name, last_name FROM Student")
+        for firstname, surname in data:
+            print(f"{firstname} {surname}")
