@@ -65,6 +65,7 @@ def offer_to_store(data):
         else:
             print("Invalid input. Please enter 'Y' or 'N'.")
 
+
 USAGE = """
 Available commands:
 
@@ -78,17 +79,51 @@ lf                         - list all students who completed their course with m
 e                          - exit program
 """
 
-print("Welcome to the Data Querying App!")
+print("Welcome to Data Querying Application!")
 
 while True:
     print()
     user_input = input(USAGE + "\nType your option here: ").split()
     if not user_input:
+        print("No input provided. Please enter a command.")
         continue
 
     command, *args = user_input
 
     if command == "d":
-        data = cur.execute("SELECT first_name, last_name FROM Student")
+        data = cur.execute("SELECT first_name, last_name FROM students")
         for firstname, surname in data:
             print(f"{firstname} {surname}")
+
+    elif command == "vs":
+        if usage_is_incorrect(user_input, 1):
+            continue
+        student_id = args[0]
+        cur.execute("""
+            SELECT c.course_name
+            FROM Course c
+            INNER JOIN StudentCourse sc ON c.course_code = sc.course_code
+            WHERE sc.student_id = ?
+        """, (student_id,))
+        subjects = cur.fetchall()
+        print(f"Subjects for student ID {student_id}:")
+        for subject in subjects:
+            print(subject[0])
+        offer_to_store(subjects)
+
+    elif command == "la":
+        if usage_is_incorrect(user_input, 2):
+            continue
+        firstname, surname = args
+        cur.execute("""
+            SELECT a.street, a.city
+            FROM Address a
+            INNER JOIN Student s ON a.address_id = s.address_id
+            WHERE s.first_name = ? AND s.last_name = ?
+        """, (firstname, surname))
+        address = cur.fetchall()
+        if address:
+            print(f"Address for {firstname} {surname}: {address[0][0]}, {address[0][1]}")
+            offer_to_store(address)
+        else:
+            print(f"No address found for {firstname} {surname}.")
