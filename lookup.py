@@ -127,3 +127,19 @@ while True:
             offer_to_store(address)
         else:
             print(f"No address found for {firstname} {surname}.")
+
+    elif command == "lr":
+        if usage_is_incorrect(user_input, 1):
+            continue
+        student_id = args[0]
+        cur.execute("""
+            SELECT r.review_text, r.completeness, r.efficiency, r.style, r.documentation
+            FROM Review r
+            WHERE r.student_id = ?
+            """, (student_id,))
+        reviews = cur.fetchall()
+        print(f"Reviews for student {student_id}:")
+        for review_text, completeness, efficiency, style, documentation in reviews:
+            print(f"Scores: {completeness}, Efficiency: {efficiency}, Style: {style}, Documentation: {documentation}")
+            print(f"Review: {review_text},")
+        offer_to_store(reviews)
