@@ -143,3 +143,18 @@ while True:
             print(f"Scores: {completeness}, Efficiency: {efficiency}, Style: {style}, Documentation: {documentation}")
             print(f"Review: {review_text},")
         offer_to_store(reviews)
+
+    elif command == "lc":
+        if usage_is_incorrect(user_input, 1):
+            continue
+        teacher_id = args[0]
+        cur.execute("""
+            Select c.course_name
+            FROM Course c
+            WHERE c.teacher_id = ?
+        """, (teacher_id,))
+        courses = cur.fetchall()
+        print(f"Course tought by teacher {teacher_id}:")
+        for course in courses:
+            print(course[0])
+        offer_to_store(courses)
