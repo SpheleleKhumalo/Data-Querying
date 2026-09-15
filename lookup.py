@@ -172,4 +172,18 @@ while True:
         for student in incomplete_student:
             print(f"ID: {student[0]}, Name: {student[1]} {student[2]}, Email: {student[3]}, Course: {student[4]}")
         offer_to_store(incomplete_student)
+
+    elif command == "lf":
+        cur.execute("""
+            SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name, sc.marks
+            FROM Student s
+            INNER JOIN StudentCourse sc ON s.student_id = sc.student_id
+            INNER JOIN Course c ON sc.course_code = c.course_code
+            WHERE sc.marks <= 30 AND sc.is_complete = 1
+        """)
+        low_marks_students = cur.fetchall()
+        print("Students who completed their course with marks <= 30:")
+        for student in low_marks_students:
+            print(student)
+        offer_to_store(low_marks_students)
         
