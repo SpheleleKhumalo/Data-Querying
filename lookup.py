@@ -158,3 +158,18 @@ while True:
         for course in courses:
             print(course[0])
         offer_to_store(courses)
+
+    elif command == "lnc":
+        cur.execute("""
+            SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name
+            FROM Student s
+            LEFT JOIN StudentCourse sc ON s.student_id = sc.student_id
+            LEFT JOIN Course c ON sc.course_code = c.course_code
+            WHERE sc.is_complete = 0
+        """)
+        incomplete_student = cur.fetchall()
+        print("Students who haven't completed their course:")
+        for student in incomplete_student:
+            print(f"ID: {student[0]}, Name: {student[1]} {student[2]}, Email: {student[3]}, Course: {student[4]}")
+        offer_to_store(incomplete_student)
+        
