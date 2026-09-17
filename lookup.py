@@ -4,7 +4,7 @@ import json
 import xml.etree.ElementTree as ET
 
 # Function to connect to a database safely
-def connect_to_database(db_name="Hyperion.db"):
+def connect_to_database(db_name="HyperionDev.db"):
     try:
         conn = sqlite3.connect(db_name)
         return conn
@@ -91,7 +91,7 @@ while True:
     command, *args = user_input
 
     if command == "d":
-        data = cur.execute("SELECT first_name, last_name FROM students")
+        data = cur.execute("SELECT first_name, last_name FROM Student")
         for firstname, surname in data:
             print(f"{firstname} {surname}")
 
@@ -186,4 +186,11 @@ while True:
         for student in low_marks_students:
             print(student)
         offer_to_store(low_marks_students)
+
+    elif command == "e":
+        print("Exiting the program. Goodbye!")
+        break
+
+    else:
+        print("Invalid command. Please try again.")
         
