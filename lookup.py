@@ -89,12 +89,14 @@ while True:
         continue
 
     command, *args = user_input
-
+    
+    # d demo (list all student names)
     if command == "d":
         data = cur.execute("SELECT first_name, last_name FROM Student")
         for firstname, surname in data:
             print(f"{firstname} {surname}")
 
+    # vs <student_id> (view subjects taken by a student)
     elif command == "vs":
         if usage_is_incorrect(user_input, 1):
             continue
@@ -111,6 +113,7 @@ while True:
             print(subject[0])
         offer_to_store(subjects)
 
+    # la <firstname> <surname> (lookup address for a given firstname and surname)
     elif command == "la":
         if usage_is_incorrect(user_input, 2):
             continue
@@ -128,6 +131,7 @@ while True:
         else:
             print(f"No address found for {firstname} {surname}.")
 
+    # lr <student_id> (list reviews for a given student_id)
     elif command == "lr":
         if usage_is_incorrect(user_input, 1):
             continue
@@ -144,6 +148,7 @@ while True:
             print(f"Review: {review_text},")
         offer_to_store(reviews)
 
+    # lc <teacher_id> (list all courses taken by teacher_id)
     elif command == "lc":
         if usage_is_incorrect(user_input, 1):
             continue
@@ -159,6 +164,7 @@ while True:
             print(course[0])
         offer_to_store(courses)
 
+    # lnc (list all students who haven't completed their course)
     elif command == "lnc":
         cur.execute("""
             SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name
@@ -173,6 +179,7 @@ while True:
             print(f"ID: {student[0]}, Name: {student[1]} {student[2]}, Email: {student[3]}, Course: {student[4]}")
         offer_to_store(incomplete_student)
 
+    # lf (list all students who completed their course with marks <= 30)
     elif command == "lf":
         cur.execute("""
             SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name, sc.marks
@@ -187,6 +194,7 @@ while True:
             print(student)
         offer_to_store(low_marks_students)
 
+    # e (exit program)
     elif command == "e":
         print("Exiting the program. Goodbye!")
         break
