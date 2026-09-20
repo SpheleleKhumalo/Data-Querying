@@ -14,3 +14,9 @@ from lookup import (
 @pytest.fixture
 def setup_database():
     return [(1, "Alice", "Smith"), (2, "Bob", "Jones")]
+
+
+# Function to test the usage_is_incorrect function with correct arguments
+def test_usage_is_incorrect_correct_args():
+    assert usage_is_incorrect(["vs", "123"], 1) is False
+    assert usage_is_incorrect(["la", "John", "Doe"], 2) is False
