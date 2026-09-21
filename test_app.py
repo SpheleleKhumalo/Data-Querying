@@ -20,3 +20,9 @@ def setup_database():
 def test_usage_is_incorrect_correct_args():
     assert usage_is_incorrect(["vs", "123"], 1) is False
     assert usage_is_incorrect(["la", "John", "Doe"], 2) is False
+
+
+def test_usage_is_incorrect_incorrect_args():
+    assert usage_is_incorrect(["vs"], 1) is True
+    assert usage_is_incorrect(["la", "John"], 2) is True
+    assert usage_is_incorrect(["la", "John", "Doe", "Extra"], 2) is True

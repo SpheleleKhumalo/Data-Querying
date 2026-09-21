@@ -182,11 +182,11 @@ while True:
     # lf (list all students who completed their course with marks <= 30)
     elif command == "lf":
         cur.execute("""
-            SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name, sc.marks
+            SELECT s.student_id, s.first_name, s.last_name, s.email, c.course_name, sc.mark
             FROM Student s
             INNER JOIN StudentCourse sc ON s.student_id = sc.student_id
             INNER JOIN Course c ON sc.course_code = c.course_code
-            WHERE sc.marks <= 30 AND sc.is_complete = 1
+            WHERE sc.mark <= 30 AND sc.is_complete = 1
         """)
         low_marks_students = cur.fetchall()
         print("Students who completed their course with marks <= 30:")
