@@ -21,8 +21,28 @@ def test_usage_is_incorrect_correct_args():
     assert usage_is_incorrect(["vs", "123"], 1) is False
     assert usage_is_incorrect(["la", "John", "Doe"], 2) is False
 
-
+# Function to test the usage_is_incorrect function with incorrect arguments
 def test_usage_is_incorrect_incorrect_args():
     assert usage_is_incorrect(["vs"], 1) is True
     assert usage_is_incorrect(["la", "John"], 2) is True
     assert usage_is_incorrect(["la", "John", "Doe", "Extra"], 2) is True
+
+# Function to test the store_data_as_json function
+def test_store_data_as_json(tmp_path, sample_data):
+    filename = tmp_path / "test_json.json"
+    store_data_as_json(sample_data, filename)
+    assert filename.exists()
+    with open(filename, 'r') as f:
+        data =json.load(f)
+    assert data == sample_data
+
+# Function to test the store_data_as_xml function
+def test_store_data_as_xml(tmp_path, sample_data):
+    filename = tmp_path / "test_xml.xml"
+    store_data_as_xml(sample_data, filename)
+    assert filename.exists()
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    entries = root.findall('entry')
+    assert len(entries) == len(sample_data)
+    assert entries[0].find("field1").text == "Alice"
