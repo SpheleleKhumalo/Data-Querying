@@ -56,3 +56,9 @@ def test_database_connection(tmp_path):
     cur.execute("CREATE TABLE Student (student_id INTEGER, first_name TEXT, last_name TEXT)")
     cur.execute("INSERT INTO Student VALUES (1, 'Alice', 'Smith')")
     cur.commit()
+
+    cur.execute("SELECT fist_name, last_name FROM Student WHERE student_id = ?")
+    result = cur.fetchone()
+    assert result == ("Alice", "Smith")
+
+    conn.close()
