@@ -46,3 +46,10 @@ def test_store_data_as_xml(tmp_path, sample_data):
     entries = root.findall('entry')
     assert len(entries) == len(sample_data)
     assert entries[0].find("field1").text == "Alice"
+
+# Function to test the database connection
+def test_database_connection(tmp_path):
+    # Create a temporal SQLite DataBase
+    df_file = tmp_path / "test.db"
+    conn = sqlite3.connect(df_file)
+    cur = conn.cursor()
