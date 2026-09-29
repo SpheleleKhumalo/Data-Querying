@@ -27,9 +27,9 @@ This project is a **command-line data querying tool** built with **Python** and 
 
 ---
 
-🧪 Testing
+## 🧪 Testing
 Unit tests are included using pytest.
-Tests cover:
+**Tests cover**:
 - Argument validation (usage_is_incorrect)
 - JSON/XML export functions
 - Database connection and queries
